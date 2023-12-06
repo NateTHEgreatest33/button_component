@@ -55,10 +55,12 @@ class button
         //delete copy constructor
         void setLight( bool on );
         bool isPushed( void );
+        bool wasPushed( void );
     private:
-        uint pButton;
-        uint pLight;
-        bool interruptDriven;
+        uint p_pButton;
+        uint p_pLight;
+        bool p_interruptDriven;
+        bool p_wasPushed;
         void interruptHandler( void );
     };
 
