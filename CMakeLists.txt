@@ -12,10 +12,9 @@ add_library( buttonComponent
 
 target_link_libraries( buttonComponent
   pico_stdlib 
-  hardware_spi
+  # hardware_gpio
   # Using Pico W
   pico_cyw43_arch_none
-
 )
 
 target_include_directories(buttonComponent PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

@@ -15,6 +15,7 @@
                               INCLUDES
 --------------------------------------------------------------------*/
 #include "button.hpp"
+#include "hardware/gpio.h"
 
 /*--------------------------------------------------------------------
                           GLOBAL NAMESPACES
@@ -52,10 +53,33 @@ component::button()
 *       component::button (constructor)
 *
 *   DESCRIPTION:
-*       button class constructor
+*       button class cons
 *
 *********************************************************************/
-component::button::button( int push_port, int light_port, bool interruptDriven ){}
+component::button::button( uint button_port, edge direction, uint light_port, bool interruptDriven )
+    {
+    uint32_t edge_selected = ( direction == component::edge::rising_edge ) ? GPIO_IRQ_EDGE_RISE : GPIO_IRQ_EDGE_FALL;
+
+    pButton = button_port;
+    pLight = light_port;
+    this->interruptDriven = interruptDriven;
+
+
+
+    gpio_init( pButton );
+    gpio_init( pLight );
+
+    gpio_set_dir( pLight, GPIO_OUT );
+    gpio_set_dir( pButton, GPIO_IN );
+
+    gpio_set_drive_strength( pLight, GPIO_DRIVE_STRENGTH_12MA );
+
+    if( interruptDriven )
+        gpio_set_irq_enabled( pButton, edge_selected, true );
+
+    
+
+    }
 
 /*********************************************************************
 *
@@ -77,7 +101,10 @@ component::button::~button(){}
 *       sets the button light on or off
 *
 *********************************************************************/
-void component::button::setLight( bool on ){}
+void component::button::setLight( bool on )
+    {
+    gpio_put( pLight, on );
+    }
 
 /*********************************************************************
 *
@@ -90,3 +117,7 @@ void component::button::setLight( bool on ){}
 *********************************************************************/
 bool component::button::isPushed( void ){ return true; }
 
+
+
+
+void component::button::interruptHandler( void ){}

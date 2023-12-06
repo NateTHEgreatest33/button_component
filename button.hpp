@@ -7,11 +7,11 @@
 *
 *   Copyright 2023 Nate Lenze
 *
-*********************************************************************/
+****************a*****************************************************/
 /*--------------------------------------------------------------------
                               INCLUDES
 --------------------------------------------------------------------*/
-
+#include "pico/stdlib.h"
 /*--------------------------------------------------------------------
                           GLOBAL NAMESPACES
 --------------------------------------------------------------------*/
@@ -20,7 +20,10 @@ namespace component {
 /*--------------------------------------------------------------------
                           LITERAL CONSTANTS
 --------------------------------------------------------------------*/
-
+enum struct edge {
+    rising_edge,
+    lowering_edge,
+};
 /*--------------------------------------------------------------------
                                 TYPES
 --------------------------------------------------------------------*/
@@ -47,15 +50,16 @@ namespace component {
 class button 
     {
     public:
-        button( int push_port, int light_port, bool interruptDriven );
+        button( uint button_port, edge direction, uint light_port, bool interruptDriven );
         ~button();
-
+        //delete copy constructor
         void setLight( bool on );
         bool isPushed( void );
     private:
-        int port_button;
-        int port_light;
-        bool interrupt;
+        uint pButton;
+        uint pLight;
+        bool interruptDriven;
+        void interruptHandler( void );
     };
 
 
