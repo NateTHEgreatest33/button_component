@@ -20,10 +20,7 @@ namespace component {
 /*--------------------------------------------------------------------
                           LITERAL CONSTANTS
 --------------------------------------------------------------------*/
-enum struct edge {
-    rising_edge,
-    lowering_edge,
-};
+
 /*--------------------------------------------------------------------
                                 TYPES
 --------------------------------------------------------------------*/
@@ -50,17 +47,19 @@ enum struct edge {
 class button 
     {
     public:
-        button( uint button_port, edge direction, uint light_port, bool interruptDriven );
+        button( uint button_port, uint light_port, bool interruptDriven, gpio_irq_level edge = GPIO_IRQ_EDGE_RISE );
         ~button();
         //delete copy constructor
         void setLight( bool on );
         bool isPushed( void );
         bool wasPushed( void );
+        void int_pushed( void );
     private:
         uint p_pButton;
         uint p_pLight;
         bool p_interruptDriven;
-        bool p_wasPushed;
+        uint8_t p_wasPushed;
+        uint32_t p_prevTime;
         void interruptHandler( void );
     };
 
