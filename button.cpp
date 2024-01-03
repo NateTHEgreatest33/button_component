@@ -19,8 +19,6 @@
 #include "hardware/timer.h"
 #include "hardware/sync.h"
 
-#include <functional>
-
 /*--------------------------------------------------------------------
                           GLOBAL NAMESPACES
 --------------------------------------------------------------------*/
@@ -60,7 +58,13 @@ component::button()
 *       button class cons
 *
 *********************************************************************/
-component::button::button( uint button_port, uint light_port, bool interruptDriven, gpio_irq_level edge )
+component::button::button
+    (
+    uint button_port, 
+    uint light_port, 
+    bool interruptDriven, 
+    gpio_irq_level edge 
+    )
 {
 /*----------------------------------------------------------
 Assert if edge level is incorrectly setup
@@ -112,7 +116,10 @@ if( interruptDriven )
 *       button class deconstructor
 *
 *********************************************************************/
-component::button::~button()
+component::button::~button
+    (
+    void
+    )
 {
 } /* button::~button() */
 
@@ -125,7 +132,10 @@ component::button::~button()
 *       sets the button light on or off
 *
 *********************************************************************/
-void component::button::setLight( bool mode )
+void component::button::setLight
+    (
+    bool mode 
+    )
 {
 /*----------------------------------------------------------
 Set light on/off depending on input
@@ -143,7 +153,10 @@ gpio_put( p_pLight, mode );
 *       returns if button is currently pushed or not
 *
 *********************************************************************/
-bool component::button::isPushed( void )
+bool component::button::isPushed
+    ( 
+    void 
+    )
 {
 return gpio_get( p_pButton );
 
@@ -160,7 +173,10 @@ return gpio_get( p_pButton );
 *   NOTE: this is only used when interrupts have been selected on
 *
 *********************************************************************/
-void component::button::int_pushed( void )
+void component::button::int_pushed
+    ( 
+    void 
+    )
 {
 /*----------------------------------------------------------
 Only process if interrupts are enabled
@@ -181,7 +197,10 @@ if( p_interruptDriven )
 *   NOTE: this is only used when interrupts have been selected on
 *
 *********************************************************************/
-bool component::button::wasPushed( void )
+bool component::button::wasPushed
+    (
+    void 
+    )
 {
 /*----------------------------------------------------------
 local variables
