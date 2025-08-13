@@ -54,17 +54,22 @@ class button
         bool isPushed( void );
         bool wasPushed( void );
         void int_pushed( void );
+        void runtime( void );
 
         button (const button&) = delete;
         button& operator= (const button&) = delete;
 
     private:
+
         uint p_pButton;
         uint p_pLight;
         bool p_interruptDriven;
+        bool p_is_pushed;
         uint8_t p_wasPushed;
         uint32_t p_prevTime;
+        uint32_t p_debounce_buffer;
 
+        bool p_current_state( void );
     };
 
 
